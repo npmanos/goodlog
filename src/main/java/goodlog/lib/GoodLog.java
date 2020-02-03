@@ -1,4 +1,4 @@
-package badlog.lib;
+package goodlog.lib;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.zip.GZIPOutputStream;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class BadLog {
+public class GoodLog {
 
     /**
      * The unit to use when the data does not have a unit.
@@ -22,7 +22,7 @@ public class BadLog {
     public static final String UNITLESS = "ul";
     public static final String DEFAULT_DATA = Double.toString(-1.0);
 
-    private static Optional<BadLog> instance = Optional.empty();
+    private static Optional<GoodLog> instance = Optional.empty();
 
     private boolean registerMode;
 
@@ -36,7 +36,7 @@ public class BadLog {
 
     private Function<Double, String> doubleStringFunction = (d) -> String.format("%.5g", d);
 
-    private BadLog(String path, Boolean compress) {
+    private GoodLog(String path, Boolean compress) {
         registerMode = true;
         namespace = new ArrayList<>();
         topics = new ArrayList<>();
@@ -63,23 +63,23 @@ public class BadLog {
     }
 
     /**
-     * Initializes BadLog.
+     * Initializes GoodLog.
      *
      * @param path of bag file
-     * @return the instance of BadLog
+     * @return the instance of GoodLog
      * @throws RuntimeException if already initialized
      */
-       public static BadLog init(String path, Boolean compress) {
+       public static GoodLog init(String path, Boolean compress) {
         if (instance.isPresent())
             throw new RuntimeException();
 
-        BadLog badLog = new BadLog(path, compress);
-        instance = Optional.of(badLog);
+        GoodLog goodLog = new GoodLog(path, compress);
+        instance = Optional.of(goodLog);
 
-        return badLog;
+        return goodLog;
     }
 
-    public static BadLog init(String path) {
+    public static GoodLog init(String path) {
         return init(path, false);
     }
 
@@ -117,7 +117,7 @@ public class BadLog {
      * @param attrs    array of topic attributes
      */
     public static void createTopic(String name, String unit, Supplier<Double> supplier, String... attrs) {
-        BadLog instance = BadLog.instance.get();
+        GoodLog instance = GoodLog.instance.get();
         createTopicStr(name, unit, () -> instance.doubleStringFunction.apply(supplier.get()), attrs);
     }
 
@@ -167,7 +167,7 @@ public class BadLog {
      * @param value
      */
     public static void publish(String name, String value) {
-        BadLog tmp = instance.get();
+        GoodLog tmp = instance.get();
         if (tmp.registerMode)
             throw new InvalidModeException();
         tmp.recievePublishedData(name, value);
@@ -260,7 +260,7 @@ public class BadLog {
             throw new InvalidModeException();
 
         StringJoiner joiner = new StringJoiner(",");
-        topics.stream().map(Topic::getValue).map(BadLog::escapeCommas).forEach((v) -> joiner.add(v));
+        topics.stream().map(Topic::getValue).map(GoodLog::escapeCommas).forEach((v) -> joiner.add(v));
         String line = joiner.toString();
 
         writeLine(line);

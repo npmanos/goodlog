@@ -1,4 +1,4 @@
-package badlog.lib;
+package goodlog.lib;
 
 public class InvalidModeException extends RuntimeException {
 	private static final long serialVersionUID = -2224779029484673090L;

@@ -1,4 +1,4 @@
-package badlog.lib;
+package goodlog.lib;
 
 import java.util.Optional;
 
@@ -9,7 +9,7 @@ class SubscribedTopic extends Topic {
 	private DataInferMode inferMode;
 	private String[] attrs;
 
-	private String value = BadLog.DEFAULT_DATA;
+	private String value = GoodLog.DEFAULT_DATA;
 
 	public SubscribedTopic(String name, String unit, DataInferMode inferMode, String... attrs) {
 		this.name = name;
@@ -37,7 +37,7 @@ class SubscribedTopic extends Topic {
 	public void handlePublishedData(Optional<String> data) {
 		switch(inferMode) {
 		case DEFAULT:
-			value = data.orElse(BadLog.DEFAULT_DATA);
+			value = data.orElse(GoodLog.DEFAULT_DATA);
 			break;
 		case LAST:
 			if(data.isPresent())

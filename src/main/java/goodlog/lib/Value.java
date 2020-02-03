@@ -1,4 +1,4 @@
-package badlog.lib;
+package goodlog.lib;
 
 class Value extends NamespaceObject {
 	String name;

@@ -1,4 +1,4 @@
-package badlog.lib;
+package goodlog.lib;
 
 public enum DataInferMode {
 	DEFAULT,
